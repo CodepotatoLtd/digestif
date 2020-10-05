@@ -1,6 +1,6 @@
 <?php
 
-namespace CodepotatoLtd\Digestive\Notifications;
+namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -8,7 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Str;
 
-class SimpleDigestEmail extends Notification implements ShouldQueue
+class SimpleDigestifEmail extends Notification implements ShouldQueue
 {
     use Queueable;
 

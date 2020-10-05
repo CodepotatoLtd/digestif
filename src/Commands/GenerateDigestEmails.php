@@ -4,8 +4,10 @@
 namespace CodepotatoLtd\Digestive\Commands;
 
 
+use CodepotatoLtd\Digestive\Tasks\Digestable;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
-use Symfony\Component\Console\Command\Command;
+use Illuminate\Support\Facades\Schema;
 
 class GenerateDigestEmails extends Command
 {
@@ -14,7 +16,7 @@ class GenerateDigestEmails extends Command
      *
      * @var string
      */
-    protected $signature = 'digestive:pour';
+    protected $signature = 'digestif:pour';
 
     /**
      * The console command description.
@@ -29,14 +31,23 @@ class GenerateDigestEmails extends Command
      * @param  Artisan  $artisan
      * @return int
      */
-    public function handle(Artisan $artisan): int
+    public function handle(): int
     {
 
-        $artisan->setCommand($this);
+        if( !\config('digestif.enabled') ){
+            $this->error('Zoiks! Digestif is disabled');
+            return 0;
+        }
 
-        $artisan->note('Pouring a small one to wet the whistle.');
+        if( !Schema::hasTable('notifications') ){
+            $this->error('We can\'t see a notifications table. Perhaps try running "php artisan notifications:table"');
+            return 0;
+        }
 
+        $this->info('Pouring a small one to wet the whistle.');
 
+        $service = new Digestable($this);
+        $service->run();
 
         return 0;
 

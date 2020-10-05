@@ -4,10 +4,11 @@
     "type": "library",
     "require": {
         "php": ">=7.4",
+        "illuminate/console": "^6.0 || ^7.0 || ^8.0",
         "illuminate/support": "^6.0 || ^7.0 || ^8.0",
         "illuminate/bus": "^6.0 || ^7.0 || ^8.0",
         "illuminate/notifications": "^6.0 || ^7.0 || ^8.0",
-        "illuminate/database": "^6.0 || ^7.0 || ^8.0",
+        "illuminate/database": "^6.0 || ^7.0 || ^8.0"
     },
     "license": "MIT",
     "authors": [

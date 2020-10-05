@@ -1,10 +1,11 @@
 <?php
 
 
-namespace CodepotatoLtd\Digestive;
+namespace CodepotatoLtd\Digestive\Tasks;
 
 
-use CodepotatoLtd\Digestive\Notifications\SimpleDigestEmail;
+use CodepotatoLtd\Digestive\Commands\GenerateDigestEmails;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -12,15 +13,23 @@ use Illuminate\Support\Facades\Schema;
 class Digestable
 {
 
+    protected $drinks = ['vermouth', 'champagne', 'pastis', 'gin', 'raki', 'fino', 'amontillado', 'dry sherry'];
     protected $awaiting_digest;
     protected $artisan;
 
-    public function __construct(Artisan $artisan)
+    /**
+     * Digestable constructor.
+     * @param  Artisan  $artisan
+     */
+    public function __construct(GenerateDigestEmails $artisan)
     {
         $this->awaiting_digest = [];
         $this->artisan = $artisan;
     }
 
+    /**
+     *
+     */
     public function run()
     {
         // check to see if the table column exists to power our digests
@@ -29,41 +38,55 @@ class Digestable
         }
 
         DB::table('notifications')
+            ->orderBy('id', 'asc')
             ->select('*')
             ->where('digested_at', '=', null)
             ->chunk(100, function ($notifications) {
 
                 foreach ($notifications as $notification) {
-                    if (!isset($this->awaiting_digest[$notification->user_id])) {
-                        $this->awaiting_digest[$notification->user_id] = 1;
+                    if (!isset($this->awaiting_digest[$notification->notifiable_id])) {
+                        $this->awaiting_digest[$notification->notifiable_id] = 1;
                         continue;
                     }
-                    $this->awaiting_digest[$notification->user_id]++;
+                    $this->awaiting_digest[$notification->notifiable_id]++;
                 }
             });
 
-        $this->artisan->info('Preparing a total of ' . count($this->awaiting_digest) . ' digestives for your users');
+        $this->artisan->info('Preparing a total of ' . count($this->awaiting_digest) . ' digestifs for your users');
 
         if (count($this->awaiting_digest)) {
             foreach( $this->awaiting_digest as $key => $count ){
                 // process the notification for each user
 
-                $model = config('digestive.user_model');
-                $user = $model::find($key);
+                $model = \config('digestif.user_model');
+                $user = (app($model))::find($key);
 
                 if( $user instanceof $model ) {
-                    $user->notify(new SimpleDigestEmail($count));
-                    $this->artisan->info('Poured a  for '. $user->email );
+                    $user->notify(new \App\Notifications\SimpleDigestifEmail($count));
+                    $this->artisan->info('Poured a ' . $this->getDigestifName() .  ' for '. $user->email );
                 }
 
             }
+            $this->artisan->info('Hic. I think we\'ve had enough for right now. ');
+        } else {
+            $this->artisan->info('Alas, there was no need for a digestif. More for us! Hic!');
         }
 
     }
 
+    /**
+     * @return bool
+     */
     final private function preFlightChecks()
     {
         return Schema::hasColumn('notifications', 'digested_at');
+    }
+
+    /**
+     * @return array|mixed
+     */
+    final private function getDigestifName(){
+        return Arr::random($this->drinks);
     }
 
 }
