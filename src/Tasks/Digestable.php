@@ -46,9 +46,11 @@ class Digestable
                 foreach ($notifications as $notification) {
                     if (!isset($this->awaiting_digest[$notification->notifiable_id])) {
                         $this->awaiting_digest[$notification->notifiable_id] = 1;
+                        DB::table('notifications')->where('id', $notification->id)->update(['digested_at' => now()]);
                         continue;
                     }
                     $this->awaiting_digest[$notification->notifiable_id]++;
+                    DB::table('notifications')->where('id', $notification->id)->update(['digested_at' => now()]);
                 }
             });
 
