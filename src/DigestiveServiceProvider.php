@@ -7,9 +7,10 @@ use Illuminate\Support\ServiceProvider;
 class DigestiveServiceProvider extends ServiceProvider
 {
 
+
     public function boot(){
         $this->publishes([
-            __DIR__.'/../config/digestive.php' => config_path('digestive.php'),
+            __DIR__.'/config/digestive.php' => config_path('digestive.php'),
         ], 'digestive-config');
 
         if ($this->app->runningInConsole()) {
@@ -25,7 +26,7 @@ class DigestiveServiceProvider extends ServiceProvider
 
     public function register(){
         $this->mergeConfigFrom(
-            __DIR__.'/../config/digestive.php',
+            __DIR__ . '/config/digestive.php',
             'digestive'
         );
     }
