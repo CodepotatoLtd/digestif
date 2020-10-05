@@ -21,8 +21,7 @@ Using the vendor:publish method you have full control of both the notification t
 
 
 ## Roadmap
-[] Unsubscribing from the digest email
-
-[] Itemised digest emails as well as our simple counter version
-
-[] 
+- [x] ~~Simple digest email~~ 
+- [ ] Unsubscribing from the digest email
+- [ ] Itemised digest emails as well as our simple counter version
+- [ ] User controls to set the frequency of their digests 
