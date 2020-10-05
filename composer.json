@@ -1,0 +1,29 @@
+{
+    "name": "gareththompson/digestive",
+    "description": "A digest email for Laravel database notifications",
+    "type": "library",
+    "require": {
+        "php": ">=7.4",
+        "illuminate/support": "^9.0@dev"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gareth Thompson",
+            "email": "gareth@codepotato.co.uk"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "CodepotatoLtd\\Digestive\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "CodepotatoLtd\\Digestive\\DigestiveServiceProvider"
+            ]
+        }
+    }
+}
