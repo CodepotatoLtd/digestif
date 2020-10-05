@@ -1,11 +1,11 @@
 <?php
 
-namespace CodepotatoLtd\Digestive;
+namespace CodepotatoLtd\Digestif;
 
-use CodepotatoLtd\Digestive\Commands\GenerateDigestEmails;
+use CodepotatoLtd\Digestif\Commands\GenerateDigestEmails;
 use Illuminate\Support\ServiceProvider;
 
-class DigestiveServiceProvider extends ServiceProvider
+class DigestifServiceProvider extends ServiceProvider
 {
 
 

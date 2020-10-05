@@ -1,10 +1,10 @@
 <?php
 
 
-namespace CodepotatoLtd\Digestive\Tasks;
+namespace CodepotatoLtd\Digestif\Tasks;
 
 
-use CodepotatoLtd\Digestive\Commands\GenerateDigestEmails;
+use CodepotatoLtd\Digestif\Commands\GenerateDigestEmails;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;

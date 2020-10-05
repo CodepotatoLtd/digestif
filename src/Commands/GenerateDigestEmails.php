@@ -1,10 +1,10 @@
 <?php
 
 
-namespace CodepotatoLtd\Digestive\Commands;
+namespace CodepotatoLtd\Digestif\Commands;
 
 
-use CodepotatoLtd\Digestive\Tasks\Digestable;
+use CodepotatoLtd\Digestif\Tasks\Digestable;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
