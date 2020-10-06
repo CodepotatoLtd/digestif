@@ -37,6 +37,8 @@ class Digestable
             $this->artisan->error('Digestive requires a migrate, please');
         }
 
+        $user_column = \config('digestif.notifications_user_id_column', 'notifiable_id');
+
         DB::table('notifications')
             ->orderBy('id', 'asc')
             ->select('*')
@@ -44,12 +46,12 @@ class Digestable
             ->chunk(100, function ($notifications) {
 
                 foreach ($notifications as $notification) {
-                    if (!isset($this->awaiting_digest[$notification->notifiable_id])) {
-                        $this->awaiting_digest[$notification->notifiable_id] = 1;
+                    if (!isset($this->awaiting_digest[$notification->{$user_column}])) {
+                        $this->awaiting_digest[$notification->{$user_column}] = 1;
                         DB::table('notifications')->where('id', $notification->id)->update(['digested_at' => now()]);
                         continue;
                     }
-                    $this->awaiting_digest[$notification->notifiable_id]++;
+                    $this->awaiting_digest[$notification->{$user_column}]++;
                     DB::table('notifications')->where('id', $notification->id)->update(['digested_at' => now()]);
                 }
             });
