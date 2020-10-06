@@ -43,7 +43,7 @@ class Digestable
             ->orderBy('id', 'asc')
             ->select('*')
             ->where('digested_at', '=', null)
-            ->chunk(100, function ($notifications) {
+            ->chunk(100, function ($notifications) use ($user_column) {
 
                 foreach ($notifications as $notification) {
                     if (!isset($this->awaiting_digest[$notification->{$user_column}])) {
