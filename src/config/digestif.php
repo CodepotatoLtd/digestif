@@ -44,4 +44,15 @@ return [
     */
     'notifications_user_id_column' => 'notifiable_id',
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Notifications read column
+    |--------------------------------------------------------------------------
+    |
+    | Please tell us what column stores the read toggle for notifications
+    |
+    */
+    'read_column' => 'read_at',
+
 ];

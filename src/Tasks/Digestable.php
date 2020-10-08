@@ -40,8 +40,9 @@ class Digestable
         $user_column = \config('digestif.notifications_user_id_column', 'notifiable_id');
 
         DB::table('notifications')
-            ->orderBy('id', 'asc')
+            ->orderBy('id')
             ->select('*')
+            ->where( \config('digestif.read_column'), '=', null)
             ->where('digested_at', '=', null)
             ->chunk(100, function ($notifications) use ($user_column) {
 
